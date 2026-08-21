@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-tech: 'Chakra Petch', 'Geist', sans-serif;
+  }
+
+  html, body, #root {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #0c1324;
+    color: #dce1fb;
+    font-family: var(--font-sans);
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Stitch Styling Classes */
+.inner-glow-cyan {
+  box-shadow: inset 0 0 0 1px rgba(6, 182, 212, 0.2), 0 4px 24px -4px rgba(0, 0, 0, 0.5);
+}
+
+.glass-panel {
+  background: rgba(12, 19, 36, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.7);
+}
+
+/* Pulse animation for system ready */
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(74, 225, 118, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(74, 225, 118, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 225, 118, 0); }
+}
+
+.animate-pulse-green {
+  animation: pulse-green 2s infinite;
+}
+
+/* Terminal data styling */
+.terminal-block {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.25),
+    rgba(0, 0, 0, 0.25) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+/* Scanline effect for primary button */
+.scanline-btn {
+  position: relative;
+  overflow: hidden;
+}
+.scanline-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.15) 51%);
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+/* Sparkline bars */
+.spark-bar {
+  width: 3px;
+  background-color: #06b6d4;
+  display: inline-block;
+  margin-right: 1px;
+  border-radius: 1px;
+}
+
+/* Material symbols outlined helper */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+}
