@@ -1,93 +1,259 @@
-# SpatialPhys: Real-World 3D Spatial Physics Laboratory
+# SpatialPhysX: 3D Ballistic Physics Studio & Minecraft Voxel Lab
 
-> **"Turn the physical room around you into an interactive physics laboratory."**
+> **A high-performance web-native physics simulation laboratory featuring procedural Minecraft voxel graphics, real-time ballistic projectile mechanics, interactive crafting table dynamics, and a sleek White & Purple design system.**
 
-[![Built With](https://img.shields.io/badge/Built%20With-React%20%7C%20Three.js%20%7C%20Cannon.js%20%7C%20TypeScript-38bdf8)](https://github.com/)
-[![Physics Engine](https://img.shields.io/badge/Physics-Rigid%20Body%20Simulation-34d399)](https://github.com/pmndrs/cannon-es)
-[![Computer Vision](https://img.shields.io/badge/Computer%20Vision-Real--Time%20Spatial%20Mapping-10b981)](https://github.com/)
+[![Built With](https://img.shields.io/badge/Built%20With-React%2018%20%7C%20Three.js%20%7C%20Cannon--es%20%7C%20TypeScript-9333ea)](https://github.com/)
+[![Physics Engine](https://img.shields.io/badge/Physics-128Hz%20Deterministic%20Rigid%20Body-7e22ce)](https://github.com/pmndrs/cannon-es)
+[![Theme](https://img.shields.io/badge/Theme-White%20%26%20Purple%20Glassmorphism-a855f7)](https://github.com/)
+[![Graphics](https://img.shields.io/badge/Graphics-Procedural%20Minecraft%20Pixel%20Art-22c55e)](https://github.com/)
 
 ---
 
-## 🌌 Product Vision & Architecture
+## 🌟 Table of Contents
+1. [Overview](#-overview)
+2. [Key Capabilities & Architecture](#-key-capabilities--architecture)
+3. [Customer Landing Page](#-customer-landing-page)
+4. [Minecraft Voxel Laboratory](#-minecraft-voxel-laboratory)
+5. [Ballistic Launcher & Projectile Dynamics](#-ballistic-launcher--projectile-dynamics)
+6. [Mathematical & Physics Modeling](#-mathematical--physics-modeling)
+7. [White & Purple Design System](#-white--purple-design-system)
+8. [Controls & Interaction Guide](#-controls--interaction-guide)
+9. [Project Structure](#-project-structure)
+10. [Quick Start & Setup](#-quick-start--setup)
 
-**SpatialPhys** bridges physical reality and scientific computing. Instead of rendering synthetic 3D rooms or isolated simulators, SpatialPhys captures the user's **ACTUAL PHYSICAL ROOM** through their camera and uses real-time computer vision to turn physical surfaces (such as a desk, table, or floor) into interactive rigid-body collision colliders.
+---
+
+## 🌌 Overview
+
+**SpatialPhysX** is a web-native 3D interactive physics engine designed for students, educators, and engineers. It combines deterministic rigid-body simulation with an inviting Minecraft voxel room environment, eliminating annoying webcam/AR permission dialogs in favor of an instant, distraction-free spatial experience.
+
+- **Instant Access**: Zero camera prompts or hardware dependencies.
+- **Dedicated Physics Table**: Drop or launch objects anywhere across a 3D Minecraft Crafting Bench using precision raycasting.
+- **Ballistic Launcher**: Real-time launch velocity, pitch elevation angle, and azimuth yaw heading controls with predictive trajectory arcs.
+- **White & Purple Glassmorphism**: Clean, modern aesthetics with frosted cards, glowing purple borders, and high-contrast typography.
+
+---
+
+## 🚀 Key Capabilities & Architecture
 
 ```
-USER'S REAL PHYSICAL DESK
-           ↓
-FULL-SCREEN LIVE CAMERA STREAM (WebRTC)
-           ↓
-REAL-TIME COMPUTER VISION PLANE ESTIMATION (SurfaceScanner)
-           ↓
-NEON SPATIAL GRID WIREFRAME & DEPTH CALIBRATION
-           ↓
-LOCKED RIGID-BODY COLLISION SURFACE (RigidBody type="fixed")
-           ↓
-VIRTUAL 3D RIGID BODIES (Sphere, Box, Cylinder)
-           ↓
-REAL-TIME 60 FPS DYNAMICS (Cannon-es Physics Engine)
-           ↓
-3D VECTORS & REAL-TIME SCIENTIFIC TELEMETRY HUD
+                       SPATIALPHYS ARCHITECTURE
+                      
+    [ Customer Landing Page ]  <------ Hash Router ------>  [ 3D Physics Studio ]
+     • 2D Kinematic Canvas                                    • Three.js WebGL Scene
+     • Interactive Sliders                                    • Cannon-es Physics Loop
+     • Feature Sandboxes                                      • Minecraft Voxel Lab
+     • Code Snippets                                          • Ballistic Cannon
+                                                              • Live Telemetry Feed
+                                         │
+                                         ▼
+                             [ Physics & 3D Layer ]
+                     ┌───────────────────┬───────────────────┐
+                     ▼                   ▼                   ▼
+             [ ThreeCanvas ]     [ PhysicsEngine ]   [ MinecraftRoom ]
+             • Raycaster         • Rigid Bodies      • Procedural 16x16
+             • Aim Vector        • 128Hz Loop        • Crafting Bench
+             • Trajectory Arc    • Collision Solvers • Animated Torches
 ```
 
 ---
 
-## 🚀 Core Features
+## 💻 Customer Landing Page
 
-### 1. Primary Mode: Live WebRTC Camera AR Scanner
-- **Zero Decorative CAD Meshes**: In Live AR mode, artificial 3D tables/walls/furniture models are completely hidden. The user's actual room is the visual world and physics canvas.
-- **Computer Vision Plane Detection** (`src/services/vision/SurfaceScanner.ts`):
-  - Analyzes video frames to estimate primary horizontal surfaces (desk / floor).
-  - Projects a neon-green spatial grid wireframe overlay directly over the physical desk in the webcam feed.
-  - Transparent shadow receiving plane (`ShadowMaterial`) casts realistic virtual shadows directly onto the real-world surface.
-- **Surface Elevation & Depth Calibration**: Real-time slider to snap and align the physics collider to the physical table height.
-- **Lock Surface & Attach Collider**: Freezes the detected plane into an active static rigid-body collider (`RigidBody type="fixed"`).
+Located at `/` (default visit), the landing page introduces users to the platform before entering the spatial workspace:
 
-### 2. Full Rigid-Body Physics & Vector Engine
-- **Cannon-es Simulation Engine**: Mass ($m$), Restitution/Bounciness ($e$), and Friction ($\mu$).
-- **Planetary Gravity Presets**: Instant transitions between **Earth** ($9.81\text{ m/s}^2$), **Moon** ($1.62\text{ m/s}^2$), **Mars** ($3.71\text{ m/s}^2$), **Jupiter** ($24.79\text{ m/s}^2$), **Zero-G** ($0\text{ m/s}^2$), and custom slider values.
-- **Dynamic 3D Vectors Attached to Objects**:
-  - 🔵 **Velocity ($\vec{v}$)**: Cyan arrow scaled to speed magnitude.
-  - 🟣 **Gravitational Force ($\vec{F}_g = m\vec{g}$)**: Purple downward vector.
-  - 🟢 **Normal Reaction Force ($\vec{F}_N$)**: Green ground/table reaction vector.
-  - 🔴 **Kinetic Friction Force ($\vec{F}_f$)**: Crimson resistive drag vector.
-  - 🟡 **Net Resultant Force ($\vec{F}_{\text{net}} = m\vec{a}$)**: Yellow vector sum.
-- **Slingshot Projectile Launcher**:
-  - Variable Velocity ($v_0$), Angle ($\theta$), and Direction ($\phi$).
-  - Real-time parabolic theoretical trajectory arc vs. actual historical breadcrumbs.
-
-### 3. Guided Experiments & Interactive Challenges
-- **5 Physics Experiments**:
-  1. *Free Fall & Real Surface Collision*
-  2. *Planetary Gravity Comparison (Moon vs Earth vs Jupiter)*
-  3. *Projectile Motion & $45^\circ$ Optimal Range Theorem*
-  4. *Vector Force Equilibrium ($\sum \vec{F} = m\vec{a}$)*
-  5. *Kinetic Friction & Stopping Distance ($d = \frac{v^2}{2\mu g}$)*
-- **5 Educational Challenges** with automated evaluative feedback (`SUCCESS`, `TRY AGAIN`, `TARGET MISSED`):
-  - *Challenge 1*: Desk Restitution & Landing Target
-  - *Challenge 2*: 3-Meter Projectile Range Target
-  - *Challenge 3*: 1.5m Vertical Height Hurdle
-  - *Challenge 4*: Lunar Low-G Soft Touchdown
-  - *Challenge 5*: Kinetic Friction Stopping Zone
-
-### 4. Demo Fallback & Reliability
-- Explicitly labeled fallback mode: `"DEMO MODE: PRE-SCANNED ROOM FALLBACK"`.
-- Dedicated **"RESET SIMULATION"** button to purge bodies and restore default state.
+- **Interactive 2D Trajectory Hero**:
+  - Live HTML5 Canvas simulator showing primary parabolic flight curves, bounce arcs, and glowing projectile beads.
+  - Interactive sliders for Initial Velocity ($v_0$), Launch Angle ($\theta$), and Gravity ($g$).
+  - Surface preset selector (Polished Oak, Rough Concrete, Teflon Pad) with dynamic restitution offsets.
+- **Core Technology Showcase**:
+  - Breakdown of the deterministic physics pipeline, collision detection, and spatial math.
+  - Interactive code preview tabs (JavaScript, React Hooks, WebGL).
+- **Smooth Hash Navigation**:
+  - Clicking **"Enter 3D Physics Studio"** transitions seamlessly to `#studio` without page reloads.
 
 ---
 
-## ⚡ Quick Start & Run Instructions
+## ⛏️ Minecraft Voxel Laboratory
+
+The physics simulation takes place in a warm, vibrant Minecraft room built with zero external texture dependencies:
+
+### 1. Procedural Pixel-Art Textures (`MinecraftTextures.ts`)
+Generated programmatically at runtime using HTML5 16x16 canvas with nearest-neighbor filtering (`THREE.NearestFilter`):
+- **Oak Wood Planks**: Flooring and table legs with wood grain and iron nail accents.
+- **Crafting Table**: 3x3 crafting grid top with dark oak borders and tool motifs on the sides.
+- **Stone Bricks**: Mortared castle/dungeon wall masonry.
+- **Bookshelves**: Multi-tier library shelves with colorful book spines (crimson, lapis, emerald, gold).
+- **Furnace**: Stone masonry with animated burning ember firebox.
+- **Chest**: Oak storage chest with iron latch.
+- **Wall Torches**: Wooden sticks with flickering voxel flame tips and dynamic amber point lights.
+- **Sunset Painting**: Framed 32x16 pixel-art mountain sunset landscape.
+
+### 2. Voxel Entity Skins
+Toggle the hero physics object between four block skins in the left panel:
+1. **Slime Block**: Bouncy emerald green cube with pixel-art slime face.
+2. **TNT Block**: Iconic red and white explosive cube with black TNT typography.
+3. **Diamond Block**: Radiant cyan gemstone block with beveled facets.
+4. **Ender Sphere**: Mystic turquoise physics sphere.
+
+---
+
+## 🚀 Ballistic Launcher & Projectile Dynamics
+
+SpatialPhysX features a **Ballistic Cannon & Projectile System**:
+
+### Configurable Ballistic Parameters
+- **Launch Velocity ($v_0$)**: $1.0\text{ m/s}$ to $25.0\text{ m/s}$ (with live $\text{m/s}$ and $\text{km/h}$ readouts).
+- **Elevation Pitch Angle ($\theta$)**: $10^\circ$ to $85^\circ$ (default $45^\circ$ for maximum horizontal range).
+- **Azimuth Direction Yaw ($\phi$)**: Full $360^\circ$ heading control ($-180^\circ$ to $+180^\circ$) with quick-aim buttons:
+  - `Fwd (0°)`: Launches forward into the room towards the window.
+  - `Right (90°)`: Launches right towards the furnace and chest.
+  - `Back (180°)`: Launches backward towards the user camera.
+  - `Left (-90°)`: Launches left towards the bookshelf library.
+
+### Visual Aiming & Trajectory Guides
+- **3D Aim Vector Arrow**: An interactive direction arrow (`THREE.ArrowHelper`) emerges from the reticle on the table, dynamically adjusting its pitch, azimuth, and magnitude in real time.
+- **Launchpad Ghost Block**: A translucent preview block rests on the table surface at $y = 0.86\text{m}$ to confirm launch origin.
+- **Parabolic Trajectory Arc**: Neon purple dashed curve displaying the theoretical flight path before firing.
+- **Dynamic Breadcrumbs Trail**: Fuchsia glow trail tracing the actual path taken as the object tumbles and bounces off room boundaries.
+
+### Multiple Launch Triggers
+- **Click to Launch**: In Launch Mode, clicking anywhere on the Crafting Table fires the projectile from that exact spot.
+- **Keyboard Shortcut**: Press **`Spacebar`** at any moment to launch immediately!
+- **Studio Launch Button**: Click **`🚀 Launch Object (Space)`** in the left panel.
+- **Bottom Dock Button**: Click **`🚀 Launch Object`** in the floating controller dock.
+
+---
+
+## 📐 Mathematical & Physics Modeling
+
+The simulation integrates classical Newtonian mechanics via Cannon-es and theoretical kinematics:
+
+### 1. Velocity Decomposition
+Given launch velocity $v_0$, elevation angle $\theta$, and azimuth heading $\phi$:
+$$v_x = v_0 \cos(\theta) \sin(\phi)$$
+$$v_y = v_0 \sin(\theta)$$
+$$v_z = -v_0 \cos(\theta) \cos(\phi)$$
+
+### 2. Maximum Flight Altitude
+With initial launch height $y_0$ (table elevation $0.86\text{m}$):
+$$H_{\text{max}} = y_0 + \frac{v_y^2}{2g}$$
+
+### 3. Flight Duration & Range
+Solving for impact with the floor ($y = 0$):
+$$T_{\text{flight}} = \frac{v_y + \sqrt{v_y^2 + 2gy_0}}{g}$$
+$$R = \sqrt{v_x^2 + v_z^2} \times T_{\text{flight}} = v_0 \cos(\theta) \times T_{\text{flight}}$$
+
+### 4. Planetary Gravity Presets
+- **Earth**: $9.81\text{ m/s}^2$
+- **Moon**: $1.62\text{ m/s}^2$
+- **Mars**: $3.71\text{ m/s}^2$
+- **Zero-G**: $0.05\text{ m/s}^2$
+
+---
+
+## 🎨 White & Purple Design System
+
+The application uses a custom **White & Purple Glassmorphic** theme configured via Tailwind CSS and custom tokens (`src/index.css`):
+
+| Token / Element | Color / Value | Usage |
+|---|---|---|
+| **Canvas Background** | `#faf8ff` | Main application backdrop |
+| **Primary Typography** | `#1e1035` | High-contrast deep purple text |
+| **Glass Panel Cards** | `rgba(255, 255, 255, 0.92)` | Frosted HUD panels with blur |
+| **Borders** | `rgba(168, 85, 247, 0.25)` | Translucent purple card borders |
+| **Accent Sliders** | `#9333ea` (`accent-purple-600`) | Parameter inputs |
+| **Primary Buttons** | `#9333ea` hover `#7e22ce` | Launch, Reset, and Action triggers |
+| **Aim Vector & Trails** | `#d946ef` / `#a855f7` | 3D aiming vector and trajectory curves |
+| **Twilight Sky** | `#201138` | Atmospheric 3D void outside room |
+
+---
+
+## 🎮 Controls & Interaction Guide
+
+| Action | Control |
+|---|---|
+| **Fire / Launch Object** | Press **`Spacebar`** OR click **`Launch Object`** |
+| **Click-to-Launch** | In Launch Mode, **Click** anywhere on Crafting Table |
+| **Click-to-Drop** | In Drop Mode, **Click** anywhere on Crafting Table |
+| **Orbit Camera** | **Click and Drag** mouse in 3D viewport |
+| **Zoom View** | **Mouse Wheel** (Scroll in/out) |
+| **Switch Entity Skin** | Click `Slime`, `TNT`, `Diamond`, or `Ender` |
+| **Adjust Gravity** | Click `Earth`, `Moon`, `Mars`, or `0-G` |
+| **Toggle Mode** | Click `Launch` 🚀 or `Drop` 🎯 in left panel |
+| **Spawn Extra Blocks** | Click **`+ Spawn Block`** in bottom dock |
+| **Reset Simulation** | Click **`Reset Sim`** in top header |
+
+---
+
+## 📁 Project Structure
+
+```
+spatialphys/
+├── src/
+│   ├── components/
+│   │   ├── landing/
+│   │   │   ├── LandingPage.tsx        # Customer landing page with 2D kinematic canvas
+│   │   │   ├── HeroPreviewCard.tsx    # Interactive physics demonstration card
+│   │   │   └── GravityPlayground.tsx  # Parameter sandboxes
+│   │   ├── studio/
+│   │   │   ├── PhysicsStudio.tsx      # Main 3D laboratory with launcher & telemetry
+│   │   │   └── StudioHeader.tsx       # Studio navigation bar
+│   │   └── viewport/
+│   │       ├── ThreeCanvas.tsx        # Three.js WebGL canvas, raycasting & reticle
+│   │       ├── MinecraftRoomMesh.ts   # 3D voxel room, table, shelves, window, torches
+│   │       ├── MinecraftTextures.ts   # Procedural 16x16 pixel-art canvas generator
+│   │       ├── PhysicsObjectsRenderer.ts # Minecraft block skins (Slime, TNT, Diamond)
+│   │       ├── TrajectoryArc.ts       # Theoretical & breadcrumb flight arcs
+│   │       └── VectorArrowsOverlay.ts # Dynamic 3D velocity/force arrows
+│   ├── services/
+│   │   ├── physics/
+│   │   │   └── PhysicsEngine.ts       # Cannon-es 128Hz rigid body simulation
+│   │   └── audio/
+│   │       └── SoundEffects.ts        # Synthesized Web Audio sound effects
+│   ├── App.tsx                        # Lightweight hash router (landing vs studio)
+│   ├── index.css                      # White & Purple glassmorphism styles
+│   └── main.tsx                       # React application entry point
+├── package.json
+└── README.md
+```
+
+---
+
+## ⚡ Quick Start & Setup
+
+### Prerequisites
+- **Node.js** (v18 or higher recommended)
+- **npm** or **pnpm**
+
+### Installation
 
 ```bash
-# 1. Install dependencies
+# 1. Clone the repository
+git clone https://github.com/vedmalya04-arch/SpatialPhys.git
+cd SpatialPhys
+
+# 2. Install dependencies
 npm install
 
-# 2. Start development server
+# 3. Launch development server
 npm run dev
 ```
 
-Open **[http://localhost:5173/](http://localhost:5173/)** in your browser.
+The app will be available locally at:
+- **Landing Page**: `http://localhost:5173/`
+- **3D Physics Studio**: `http://localhost:5173/#studio`
+
+### Production Build
+
+```bash
+# Build production bundle with TypeScript check
+npm run build
+
+# Preview production build locally
+npm run preview
+```
 
 ---
 
-*SpatialPhys — Engineered for the "Physics in the Real World" Hackathon Challenge.*
+*SpatialPhysX — Engineered for Spatial Dynamics, Interactive Physics, and Creative Learning.*
