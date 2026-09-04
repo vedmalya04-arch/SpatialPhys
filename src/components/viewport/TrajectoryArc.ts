@@ -11,10 +11,10 @@ export class TrajectoryArc {
   constructor() {
     this.group = new THREE.Group();
 
-    // 1. Theoretical Parabolic Arc (Dashed Neon Cyan Line)
+    // 1. Theoretical Parabolic Arc (Dashed Neon Purple Line)
     const lineGeo = new THREE.BufferGeometry();
     const lineMat = new THREE.LineDashedMaterial({
-      color: 0x38bdf8,
+      color: 0xa855f7,
       dashSize: 0.15,
       gapSize: 0.08,
       linewidth: 2,
@@ -24,24 +24,24 @@ export class TrajectoryArc {
     this.theoreticalLine = new THREE.Line(lineGeo, lineMat);
     this.group.add(this.theoreticalLine);
 
-    // 2. Real-Time Breadcrumb Trail Line (Amber Glow)
+    // 2. Real-Time Breadcrumb Trail Line (Fuchsia/Violet Glow)
     const trailGeo = new THREE.BufferGeometry();
     const trailMat = new THREE.LineBasicMaterial({
-      color: 0xfbbf24,
+      color: 0xd946ef,
       linewidth: 3,
       transparent: true,
-      opacity: 0.9
+      opacity: 0.95
     });
     this.trailLine = new THREE.Line(trailGeo, trailMat);
     this.group.add(this.trailLine);
 
-    // 3. Predicted Landing Ground Ring
+    // 3. Predicted Landing Ground Ring (Purple)
     const ringGeo = new THREE.RingGeometry(0.15, 0.22, 32);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
+      color: 0xa855f7,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.7
+      opacity: 0.75
     });
     this.landingMarker = new THREE.Mesh(ringGeo, ringMat);
     this.landingMarker.rotation.x = -Math.PI / 2;
